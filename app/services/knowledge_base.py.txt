@@ -1,0 +1,35 @@
+"""Offline financial knowledge base"""
+
+FINANCIAL_KNOWLEDGE = {
+    "loan shark": "Loan sharks charge illegal interest rates. Under the National Credit Act (Section 40), you can negotiate a payment plan. Never pay more than the original loan amount plus legal interest (max 27.5% per year). Contact the National Credit Regulator for help.",
+    
+    "debt consolidation": "Debt consolidation combines multiple debts into one payment. This can lower your monthly payment but may extend your repayment period. Speak to a registered debt counselor before consolidating.",
+    
+    "emergency fund": "An emergency fund should cover 3-6 months of expenses. Start with R1,000, then build to R10,000, then target 3 months of salary. Put it in a separate savings account.",
+    
+    "credit score": "Your credit score (0-999) affects loan approval and interest rates. Pay bills on time, keep credit usage below 30%, and check your report annually at mycreditcheck.co.za",
+    
+    "negotiate debt": "Step 1: List all debts. Step 2: Calculate your surplus. Step 3: Offer a realistic payment (e.g., R500/month). Step 4: Get agreement in writing. Step 5: Never pay more than you can afford.",
+    
+    "side hustle": "Popular side hustles in SA: Uber/E-hailing, freelance writing, tutoring, selling on Facebook Marketplace, car washing, event planning, virtual assistant, food delivery.",
+    
+    "stokvel": "A stokvel is a rotating savings scheme. Members contribute regularly and take turns receiving the lump sum. Great for forced savings and community support.",
+    
+    "default": "I'm Luvuno, your quantum-verified financial AI assistant. Ask me about debt negotiation, loan sharks, credit scores, savings, stokvels, side hustles, or budgeting. South African Patent No. 2026/05142."
+}
+
+class KnowledgeBase:
+    """Offline knowledge base for financial advice"""
+    
+    @staticmethod
+    def get_answer(query: str) -> str:
+        """Get answer from knowledge base"""
+        lower_query = query.lower()
+        
+        for key, answer in FINANCIAL_KNOWLEDGE.items():
+            if key in lower_query:
+                return answer
+        
+        return FINANCIAL_KNOWLEDGE["default"]
+
+knowledge_base = KnowledgeBase()

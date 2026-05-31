@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  salaryplan-api:
+    build: .
+    container_name: salaryplan-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ./app:/app/app
+    restart: unless-stopped
+
+  salaryplan-api-prod:
+    build: .
+    container_name: salaryplan-backend-prod
+    ports:
+      - "8000:8000"
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+    restart: always

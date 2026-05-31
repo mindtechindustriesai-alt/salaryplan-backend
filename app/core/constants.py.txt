@@ -1,0 +1,25 @@
+"""Core constants"""
+
+SERVICE_NAME = "SalaryPlan + Luvuno Quantum Backend"
+VERSION = "2.0.0"
+
+# Patent
+PATENT_NUMBER = "2026/05142"
+PATENT_FILING_DATE = "2026-05-12"
+PATENT_ATTORNEY = "ENSafrica - Dr Bernard Dippenaar"
+
+# Quantum Verification
+CHSH_SCORE = 2.76
+QUANTUM_CORRELATION = 0.984
+CLASSICAL_LIMIT = 2.0
+QUANTUM_LIMIT = 2.828
+VIOLATION_PERCENTAGE = 38
+IBM_JOB_ID = "d55p3jgnsj9s73b32lj0"
+
+# API Timeouts
+DEEPSEEK_TIMEOUT = 60.0
+DEFAULT_TIMEOUT = 30.0
+
+# Response Limits
+MAX_TOKENS = 2048
+TEMPERATURE = 0.7

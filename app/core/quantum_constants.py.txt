@@ -1,0 +1,27 @@
+"""Quantum verification constants for financial domain"""
+
+# Financial domain specific quantum thresholds
+FINANCIAL_QUANTUM_THRESHOLDS = {
+    "debt_optimization": {
+        "min_correlation": 0.95,
+        "required_chsh": 2.5,
+        "description": "Minimum quantum correlation for debt optimization"
+    },
+    "investment_advice": {
+        "min_correlation": 0.97,
+        "required_chsh": 2.6,
+        "description": "Minimum quantum correlation for investment advice"
+    },
+    "risk_assessment": {
+        "min_correlation": 0.98,
+        "required_chsh": 2.7,
+        "description": "Minimum quantum correlation for risk assessment"
+    }
+}
+
+# Quantum badge message
+QUANTUM_BADGE = {
+    "verified": "⚛️ Quantum Verified · CHSH S={} · {}% correlation",
+    "patent": "📜 South African Patent No. {}",
+    "ibm": "🖥️ IBM Verified · Job ID: {}"
+}

@@ -1,0 +1,30 @@
+"""Quantum verification models"""
+
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Optional
+
+
+class QuantumVerification(BaseModel):
+    """Quantum verification response model"""
+    quantum_verified: bool = Field(True, description="Whether quantum verification passed")
+    chsh_score: float = Field(2.76, description="CHSH Bell parameter (S=2.76)")
+    correlation: float = Field(0.984, description="Entanglement correlation (98.4%)")
+    classical_limit: float = Field(2.0, description="Classical bound (S≤2.0)")
+    violation_percentage: int = Field(38, description="Violation above classical bound")
+    ibm_job_id: str = Field("d55p3jgnsj9s73b32lj0", description="IBM Quantum job ID")
+    patent_number: str = Field("2026/05142", description="South African patent number")
+    patent_filing_date: str = Field("2026-05-12", description="Patent filing date")
+    timestamp: datetime = Field(default_factory=datetime.now)
+
+
+class QuantumStatusResponse(BaseModel):
+    """Quantum status response"""
+    quantum_verified: bool
+    chsh_score: float
+    correlation: float
+    violation_percentage: int
+    ibm_job_id: str
+    patent_number: str
+    patent_filing_date: str
+    last_verified: datetime

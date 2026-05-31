@@ -1,0 +1,36 @@
+"""Logging middleware"""
+
+import time
+import json
+import logging
+from fastapi import Request
+from starlette.middleware.base import BaseHTTPMiddleware
+from app.config import settings
+
+logger = logging.getLogger(__name__)
+
+
+class LoggingMiddleware(BaseHTTPMiddleware):
+    """Request logging middleware"""
+    
+    async def dispatch(self, request: Request, call_next):
+        start_time = time.time()
+        
+        response = await call_next(request)
+        
+        process_time = time.time() - start_time
+        
+        log_data = {
+            "method": request.method,
+            "url": str(request.url),
+            "status_code": response.status_code,
+            "process_time_ms": round(process_time * 1000, 2),
+            "client_host": request.client.host if request.client else None
+        }
+        
+        if settings.LOG_FORMAT == "json":
+            logger.info(json.dumps(log_data))
+        else:
+            logger.info(f"{log_data['method']} {log_data['url']} - {log_data['status_code']} - {log_data['process_time_ms']}ms")
+        
+        return response
