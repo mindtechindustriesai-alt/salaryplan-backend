@@ -1,60 +1,63 @@
-"""DeepSeek API service with offline fallback"""
+# ============================================================
+# SALARYPLAN BACKEND — DEEPSEEK SERVICE
+# ============================================================
 
+import os
 import httpx
-from typing import Tuple
-from app.config import settings
-from app.services.knowledge_base import knowledge_base
+from typing import Optional, Dict, Any
 from app.services.language_service import language_service
 
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 
-class DeepSeekService:
-    """Service for DeepSeek API calls"""
+async def call_deepseek(
+    prompt: str,
+    language: str = "english",
+    portal: str = "salaryplan",
+    system: str = "",
+    temperature: float = 0.5,
+    max_tokens: int = 2048
+) -> str:
+    """
+    Call DeepSeek API with the given prompt and parameters.
+    """
+    if not DEEPSEEK_API_KEY:
+        return "DeepSeek API key not configured. Please set DEEPSEEK_API_KEY environment variable."
     
-    def __init__(self):
-        self.api_key = settings.DEEPSEEK_API_KEY
-        self.timeout = 60.0
-    
-    async def get_response(self, message: str, language: str, portal: str, system: str) -> Tuple[str, str]:
-        """Get response from DeepSeek API"""
-        
-        if not self.api_key:
-            return self.get_offline_response(message, language), "offline_kb_fallback"
-        
+    try:
+        # Build system prompt using language service
         system_prompt = language_service.get_system_prompt(language, portal, system)
         
-        try:
-            async with httpx.AsyncClient(timeout=self.timeout) as client:
-                response = await client.post(
-                    "https://api.deepseek.com/v1/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {self.api_key}",
-                        "Content-Type": "application/json"
-                    },
-                    json={
-                        "model": "deepseek-chat",
-                        "messages": [
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": message}
-                        ],
-                        "temperature": 0.7,
-                        "max_tokens": 2048
-                    }
-                )
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    reply = data["choices"][0]["message"]["content"]
-                    return reply, "luvuno_llm"
-                else:
-                    return self.get_offline_response(message, language), "api_error_fallback"
-                    
-        except Exception:
-            return self.get_offline_response(message, language), "exception_fallback"
-    
-    def get_offline_response(self, message: str, language: str) -> str:
-        """Get response from offline knowledge base"""
-        answer = knowledge_base.get_answer(message)
-        return language_service.translate_response(answer, language)
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            response = await client.post(
+                DEEPSEEK_URL,
+                headers={
+                    "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "deepseek-chat",
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    "temperature": temperature,
+                    "max_tokens": max_tokens
+                }
+            )
+            
+            if response.status_code != 200:
+                return f"DeepSeek API error: {response.status_code}"
+            
+            data = response.json()
+            return data.get("choices", [{}])[0].get("message", {}).get("content", "No response")
+            
+    except httpx.TimeoutException:
+        return "DeepSeek API timeout. Please try again."
+    except Exception as e:
+        return f"Error calling DeepSeek: {str(e)}"
 
-
-deepseek_service = DeepSeekService()
+# For backward compatibility
+deepseek_service = {
+    "call_deepseek": call_deepseek
+}
