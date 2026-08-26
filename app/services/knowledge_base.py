@@ -1,17 +1,8 @@
-"""
-Knowledge Base Service for SalaryPlan
-CHSH S=2.76 · SA 2026/05142
-"""
-
 class KnowledgeBase:
     def __init__(self):
-        self.knowledge = {
-            "nca": "The National Credit Act (NCA) protects consumers in South Africa...",
-            "debt_counselling": "Debt counselling is a legal process...",
-            "loan_shark": "Loan sharks are illegal lenders..."
-        }
+        self.knowledge = {"nca": "National Credit Act protects consumers"}
     
-    def get_info(self, topic: str) -> str:
+    def get_info(self, topic):
         return self.knowledge.get(topic, "Information not found")
 
 def get_knowledge_base():
