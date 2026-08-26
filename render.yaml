@@ -1,16 +1,57 @@
+# ============================================================
+# SALARYPLAN — FULL STACK DEPLOYMENT
+# ============================================================
+
 services:
+  # ============================================================
+  # 1. FRONTEND (User-facing app)
+  # ============================================================
+  - type: static
+    name: salaryplan-frontend
+    repo: https://github.com/mindtechnindustriesai-alt/salaryplan-frontend
+    branch: main
+    buildCommand: echo "Static site — no build needed"
+    staticPublishPath: ./
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+
+  # ============================================================
+  # 2. BACKEND (API + Firebase + DeepSeek)
+  # ============================================================
   - type: web
     name: salaryplan-backend
     runtime: python
-    repo: https://github.com/mindtech/salaryplan-backend
+    repo: https://github.com/mindtechnindustriesai-alt/salaryplan-backend
     plan: free
     region: frankfurt
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
+      # ----- REQUIRED -----
       - key: DEEPSEEK_API_KEY
         sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+      # ----- PAYMENT -----
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+
+      # ----- ENVIRONMENT -----
       - key: ENVIRONMENT
         value: production
       - key: LOG_LEVEL
         value: INFO
+      - key: CORS_ORIGINS
+        value: https://salary-plan-app.onrender.com,https://salaryplan-frontend.onrender.com
