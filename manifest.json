@@ -1,0 +1,45 @@
+{
+  "name": "SalaryPlan - MindTech Financial Intelligence",
+  "short_name": "SalaryPlan",
+  "description": "African financial intelligence platform for salary management, debt settlement, and savings goals. Powered by CHSH S=2.76 quantum technology.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e17",
+  "theme_color": "#00d4ff",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["finance", "productivity", "business"],
+  "icons": [
+    {"src": "/icons/icon-72x72.png", "sizes": "72x72", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-96x96.png", "sizes": "96x96", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-128x128.png", "sizes": "128x128", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-144x144.png", "sizes": "144x144", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-152x152.png", "sizes": "152x152", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-384x384.png", "sizes": "384x384", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "screenshots": [
+    {"src": "/screenshots/dashboard.png", "sizes": "1080x1920", "type": "image/png", "label": "SalaryPlan Dashboard"},
+    {"src": "/screenshots/debt-settlement.png", "sizes": "1080x1920", "type": "image/png", "label": "Debt Settlement Planner"},
+    {"src": "/screenshots/savings-goals.png", "sizes": "1080x1920", "type": "image/png", "label": "Savings Goals"},
+    {"src": "/screenshots/quantum-badge.png", "sizes": "1080x1920", "type": "image/png", "label": "Quantum Financial Intelligence"},
+    {"src": "/screenshots/ai-negotiator.png", "sizes": "1080x1920", "type": "image/png", "label": "AI Negotiation Simulator"}
+  ],
+  "shortcuts": [
+    {"name": "Dashboard", "short_name": "Dashboard", "description": "View your financial overview", "url": "/#dashboard", "icons": [{"src": "/icons/icon-96x96.png", "sizes": "96x96", "type": "image/png"}]},
+    {"name": "Debt Settlement", "short_name": "Debt", "description": "Manage your debt repayment plan", "url": "/#debt", "icons": [{"src": "/icons/icon-96x96.png", "sizes": "96x96", "type": "image/png"}]},
+    {"name": "Savings Goals", "short_name": "Savings", "description": "Track your savings progress", "url": "/#savings", "icons": [{"src": "/icons/icon-96x96.png", "sizes": "96x96", "type": "image/png"}]},
+    {"name": "AI Negotiation", "short_name": "Negotiate", "description": "Practice financial negotiations with AI", "url": "/#negotiate", "icons": [{"src": "/icons/icon-96x96.png", "sizes": "96x96", "type": "image/png"}]}
+  ],
+  "related_applications": [
+    {"platform": "play", "url": "https://play.google.com/store/apps/details?id=com.mindtech.salaryplan", "id": "com.mindtech.salaryplan"}
+  ],
+  "prefer_related_applications": true,
+  "display_override": ["window-controls-overlay", "standalone"],
+  "edge_side_panel": {"preferred_width": 400},
+  "handle_links": "preferred",
+  "launch_handler": {"client_mode": "navigate-existing"}
+}
