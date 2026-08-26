@@ -3,7 +3,7 @@ SalaryPlan API - MindTech Financial Intelligence Platform
 CHSH S=2.76 · SA 2026/05142
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -20,17 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def root():
-    return {
-        "message": "⚛️ SalaryPlan API - CHSH S=2.76",
-        "patent": "SA 2026/05142",
-        "status": "quantum_ready",
-        "built": "Africa",
-        "for": "Africa"
-    }
+# Create router
+router = APIRouter(prefix="/api/v1")
 
-@app.get("/api/v1/health")
+@router.get("/health")
 async def health():
     return {
         "status": "healthy",
@@ -38,7 +31,7 @@ async def health():
         "patent": "SA 2026/05142"
     }
 
-@app.get("/api/v1/quantum/badge")
+@router.get("/quantum/badge")
 async def quantum_badge():
     return {
         "chsh": "S=2.76",
@@ -47,7 +40,7 @@ async def quantum_badge():
         "entanglement": "maximal"
     }
 
-@app.get("/api/v1/chat")
+@router.get("/chat")
 async def chat(message: str):
     return {
         "response": f"⚛️ CHSH S=2.76 quantum intelligence: {message}",
@@ -56,6 +49,27 @@ async def chat(message: str):
             "patent": "SA 2026/05142",
             "state": "entangled"
         }
+    }
+
+@router.get("/africa")
+async def africa():
+    return {
+        "message": "🌍 Built in Africa, for Africa",
+        "sovereignty": "Data stays on device",
+        "languages": ["English", "isiZulu", "isiXhosa", "Shona"],
+        "patent": "SA 2026/05142"
+    }
+
+app.include_router(router)
+
+@app.get("/")
+async def root():
+    return {
+        "message": "⚛️ SalaryPlan API - CHSH S=2.76",
+        "patent": "SA 2026/05142",
+        "status": "quantum_ready",
+        "built": "Africa",
+        "for": "Africa"
     }
 
 if __name__ == "__main__":

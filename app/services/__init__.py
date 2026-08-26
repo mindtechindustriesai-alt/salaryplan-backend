@@ -1,2 +1,1 @@
-"""Services package"""
-# Empty for now - we'll add services as needed
+"""Services package - empty for clean deployment"""
