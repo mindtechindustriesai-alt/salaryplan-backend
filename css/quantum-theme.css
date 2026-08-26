@@ -1,0 +1,62 @@
+/* Quantum Theme - CHSH S=2.76 Inspired */
+
+.quantum-glow {
+    animation: quantumPulse 3s ease-in-out infinite;
+}
+
+@keyframes quantumPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.1); }
+    50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.3); }
+}
+
+.quantum-state-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.quantum-state-indicator.entangled {
+    background: var(--quantum-primary);
+    animation: quantumSpin 2s linear infinite;
+}
+
+@keyframes quantumSpin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Quantum Button */
+.btn-quantum {
+    background: var(--quantum-gradient);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-quantum:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+/* Quantum Loading */
+.quantum-loader {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 212, 255, 0.1);
+    border-top: 3px solid var(--quantum-primary);
+    border-radius: 50%;
+    animation: quantumLoad 0.8s linear infinite;
+}
+
+@keyframes quantumLoad {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
