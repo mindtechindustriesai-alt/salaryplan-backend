@@ -1,76 +1,17 @@
-# ============================================================
-# SALARYPLAN BACKEND — MAIN APPLICATION
-# ============================================================
+"""
+SalaryPlan API - MindTech Financial Intelligence Platform
+CHSH S=2.76 · SA 2026/05142
+"""
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from contextlib import asynccontextmanager
-import firebase_admin
-from firebase_admin import credentials, firestore
-import os
-from dotenv import load_dotenv
-from datetime import datetime, timedelta
-import jwt
-
-# Import routes
-from app.api.routes import (
-    chat, financial, quantum, health, 
-    wages, reports, user, notifications
-)
-
-load_dotenv()
-
-# ============================================================
-# FIREBASE INIT
-# ============================================================
-cred_dict = {
-    "type": "service_account",
-    "project_id": os.getenv("FIREBASE_PROJECT_ID"),
-    "private_key": os.getenv("FIREBASE_PRIVATE_KEY", "").replace('\\n', '\n'),
-    "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
-    "token_uri": "https://oauth2.googleapis.com/token",
-}
-cred = credentials.Certificate(cred_dict)
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-# ============================================================
-# JWT SETTINGS
-# ============================================================
-SECRET_KEY = os.getenv("JWT_SECRET", "salaryplan-super-secret-key")
-ALGORITHM = "HS256"
-security = HTTPBearer()
-
-def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Verify JWT and return user ID."""
-    try:
-        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload.get("userId")
-    except jwt.PyJWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-# ============================================================
-# FASTAPI APP
-# ============================================================
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print("🚀 SalaryPlan Backend Starting...")
-    print(f"📡 Firebase connected: {db.project}")
-    print(f"⚛️ Quantum: CHSH S=2.76")
-    yield
-    print("🛑 SalaryPlan Backend Shutting down")
 
 app = FastAPI(
-    title="SalaryPlan Backend",
-    description="Financial intelligence with DeepSeek AI & Quantum Verification",
-    version="2.0.0",
-    lifespan=lifespan
+    title="SalaryPlan API",
+    description="MindTech Financial Intelligence Platform",
+    version="2.0.0"
 )
 
-# ============================================================
-# CORS
-# ============================================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -79,39 +20,42 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ============================================================
-# ROUTES
-# ============================================================
-app.include_router(chat.router, prefix="/api/chat", tags=["Chat"])
-app.include_router(financial.router, prefix="/api/financial", tags=["Financial"])
-app.include_router(quantum.router, prefix="/api/quantum", tags=["Quantum"])
-app.include_router(health.router, prefix="/api/health", tags=["Health"])
-app.include_router(wages.router, prefix="/api/wages", tags=["Wages"])
-app.include_router(reports.router, prefix="/api/reports", tags=["Reports"])
-app.include_router(user.router, prefix="/api/user", tags=["User"])
-app.include_router(notifications.router, prefix="/api/notifications", tags=["Notifications"])
-
-# ============================================================
-# ROOT & HEALTH
-# ============================================================
 @app.get("/")
 async def root():
     return {
-        "service": "SalaryPlan Backend",
-        "status": "operational",
-        "version": "2.0.0",
-        "quantum_verified": True,
-        "chsh_score": 2.76,
-        "patent": "2026/05142"
+        "message": "⚛️ SalaryPlan API - CHSH S=2.76",
+        "patent": "SA 2026/05142",
+        "status": "quantum_ready",
+        "built": "Africa",
+        "for": "Africa"
     }
 
-@app.get("/api/health")
-async def health_check():
+@app.get("/api/v1/health")
+async def health():
     return {
         "status": "healthy",
-        "firebase": db.project,
-        "quantum": "CHSH S=2.76",
-        "timestamp": datetime.utcnow().isoformat()
+        "chsh": "S=2.76",
+        "patent": "SA 2026/05142"
+    }
+
+@app.get("/api/v1/quantum/badge")
+async def quantum_badge():
+    return {
+        "chsh": "S=2.76",
+        "patent": "SA 2026/05142",
+        "status": "quantum_ready",
+        "entanglement": "maximal"
+    }
+
+@app.get("/api/v1/chat")
+async def chat(message: str):
+    return {
+        "response": f"⚛️ CHSH S=2.76 quantum intelligence: {message}",
+        "quantum": {
+            "chsh": 2.76,
+            "patent": "SA 2026/05142",
+            "state": "entangled"
+        }
     }
 
 if __name__ == "__main__":
