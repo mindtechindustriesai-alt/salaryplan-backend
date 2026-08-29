@@ -1,7 +1,3 @@
-"""SalaryPlan + Luvuno Quantum Backend"""
+from .main import app
 
-__version__ = "2.0.0"
-__patent__ = "2026/05142"
-__patent_date__ = "2026-05-12"
-__chsh_score__ = 2.76
-__quantum_correlation__ = 0.984
+__all__ = ["app"]
